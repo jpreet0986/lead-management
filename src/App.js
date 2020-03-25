@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <Router>
         <main className="container">
-          <h3>Lead Management</h3>
+          <h3 className="heading">Lead Management</h3>
           <nav className="navbar navbar-expand-lg navheader">
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">

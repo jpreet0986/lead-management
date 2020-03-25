@@ -15,7 +15,9 @@ a.selected {
   background-color: #ffeeba !important;
   border-radius: 15px;
 }
-
+.container h3.heading {
+  color: #d07373;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

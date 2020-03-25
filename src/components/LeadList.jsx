@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { dateToNiceString } from "./Utilities";
+import Moment from "react-moment";
 import { getLeadList, deleteLead } from "../services/leadService";
 
 class Leads extends Component {
@@ -79,13 +79,19 @@ class Leads extends Component {
                 leads.map(lead => (
                   <div className="card" key={lead.id}>
                     <div className="card-body">
-                      <h5 className="card-title">{lead.first_name}</h5>
+                      <h5 className="card-title">
+                        {lead.first_name} {lead.last_name}
+                      </h5>
                       <h6 className="card-subtitle mb-2 text-muted">
                         {lead.email}
                       </h6>
                       <p>{lead.notes}</p>
                       <p>{lead.is_contacted}</p>
-                      <p>{dateToNiceString(lead.created_at)}</p>
+                      <p>
+                        <Moment format="MMM DD YYYY hh:mm A">
+                          {lead.updated_at}
+                        </Moment>
+                      </p>
 
                       <Link
                         to={{
