@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink
+} from "react-router-dom";
 //import BirthdayList from "./components/birthday";
 import LeadList from "./components/LeadList";
 import AddLead from "./components/AddLead";
@@ -17,14 +22,22 @@ class App extends Component {
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <Link to={"/addLead"} className="nav-link">
+                  <NavLink
+                    to={"/addLead"}
+                    activeClassName="selected"
+                    className="nav-link"
+                  >
                     Create Lead
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link to={"/leadList"} className="nav-link">
+                  <NavLink
+                    to={"/leadList"}
+                    activeClassName="selected"
+                    className="nav-link"
+                  >
                     Leads List
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -37,6 +50,7 @@ class App extends Component {
                   <Route exact path="/addLead" component={AddLead} />
                   <Route path="/editLead/:id" component={EditLead} />
                   <Route path="/leadList" component={LeadList} />
+                  <Route path="/" component={LeadList} />
                 </Switch>
               </div>
             </div>
