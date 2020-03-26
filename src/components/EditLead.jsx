@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { editLead, getLead } from "../services/leadService";
-import { FormErrors } from "./FormErrors";
+import { FormErrors } from "./formErrors";
 
 class EditLead extends Component {
   state = {

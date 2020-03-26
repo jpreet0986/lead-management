@@ -1,29 +1,19 @@
-import React, { Component } from "react";
+"Collection of Utility funcitons";
+import React from "react";
 
-const month = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
-];
-
+// toLocaleString()
 export function dateToNiceString(myDate) {
   myDate = new Date(myDate);
   return (
     <p>
-      {month[myDate.getMonth()] +
-        " " +
-        myDate.getDate() +
-        " " +
-        myDate.getFullYear()}
+      {myDate.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      })}
     </p>
   );
 }

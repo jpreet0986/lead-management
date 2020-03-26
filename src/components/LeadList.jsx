@@ -1,43 +1,48 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Moment from "react-moment";
+import Lead from "./lead";
 import { getLeadList, deleteLead } from "../services/leadService";
 
 class Leads extends Component {
   state = {
     leads: [],
-    message: "",
     del_message: "",
     flag: "alert alert-info"
   };
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
   componentDidMount = () => {
     let getLeads = async () => {
       const leads = await getLeadList();
-      const message = this.leadCountMessage(leads);
-      this.setState({ leads, message });
+      this.setState({ leads });
     };
     getLeads();
   };
-  leadCountMessage = leads => {
-    const { length: count } = leads;
+
+  leadCountMessage = () => {
+    const { length: count } = this.state.leads;
     let message = "";
     if (count === 0) {
       message = "No Leads in database.";
+    } else if (count === 1) {
+      message = `Showing ${count} Lead`;
     } else {
       message = `Showing ${count} Leads`;
     }
-    return message;
+    return (
+      <div className="alert alert-info" role="alert">
+        {message}
+      </div>
+    );
   };
+
   handleDelete = lead => {
     let delete_resp = async lead => {
       const del = await deleteLead(lead);
-
       const leads = this.state.leads.filter(m => m.id !== lead.id);
-      const message = this.leadCountMessage(leads);
-
       this.setState({
         leads,
-        message,
         del_message: del.message,
         flag: `alert alert-${del.flag} alert-dismissible fade show`
       });
@@ -45,72 +50,43 @@ class Leads extends Component {
     delete_resp(lead);
   };
 
+  renderMessages() {
+    let { del_message, flag } = this.state;
+    return (
+      <div class="row">
+        <div class="col-sm">
+          {del_message && (
+            <div className={flag} role="alert">
+              {del_message}
+              <button
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          )}
+          {this.leadCountMessage()}
+        </div>
+      </div>
+    );
+  }
   render() {
-    let { leads, message, del_message, flag } = this.state;
-
     return (
       <React.Fragment>
         <div class="container">
+          {this.renderMessages()}
           <div class="row">
             <div class="col-sm">
-              {del_message && (
-                <div className={flag} role="alert">
-                  {del_message}
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="alert"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              )}
-              {message && (
-                <div className="alert alert-info" role="alert">
-                  {message}
-                </div>
-              )}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm">
-              {leads.length > 0 &&
-                leads.map(lead => (
-                  <div className="card" key={lead.id}>
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        {lead.first_name} {lead.last_name}
-                      </h5>
-                      <h6 className="card-subtitle mb-2 text-muted">
-                        {lead.email}
-                      </h6>
-                      <p>{lead.notes}</p>
-                      <p>{lead.is_contacted}</p>
-                      <p>
-                        <Moment format="MMM DD YYYY hh:mm A">
-                          {lead.updated_at}
-                        </Moment>
-                      </p>
-
-                      <Link
-                        to={{
-                          pathname: `/EditLead/${lead.id}`
-                        }}
-                      >
-                        <button className="btn btn-primary btn-sm mr-2">
-                          Edit
-                        </button>
-                      </Link>
-
-                      <button
-                        onClick={() => this.handleDelete(lead)}
-                        className="btn btn-danger btn-sm"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+              {this.state.leads.length > 0 &&
+                this.state.leads.map(lead => (
+                  <Lead
+                    key={lead.id}
+                    lead={lead}
+                    onDelete={this.handleDelete}
+                  />
                 ))}
             </div>
           </div>

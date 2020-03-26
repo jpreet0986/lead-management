@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { addLead } from "../services/leadService";
-import { FormErrors } from "./FormErrors";
+import { FormErrors } from "./formErrors";
 //https://learnetto.com/blog/react-form-validation
 class AddLead extends Component {
   state = {
