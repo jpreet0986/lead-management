@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink
-} from "react-router-dom";
-//import BirthdayList from "./components/birthday";
-import LeadList from "./components/LeadList";
-import AddLead from "./components/AddLead";
-import EditLead from "./components/EditLead";
-
-import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NavBar from "./components/navBar";
+import LeadList from "./components/leadList";
+import AddLead from "./components/addLead";
+import EditLead from "./components/editLead";
+import "./styles/css/App.css";
 
 class App extends Component {
   render() {
@@ -18,30 +12,7 @@ class App extends Component {
       <Router>
         <main className="container">
           <h3 className="heading">Lead Management</h3>
-          <nav className="navbar navbar-expand-lg navheader">
-            <div className="collapse navbar-collapse">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <NavLink
-                    to={"/addLead"}
-                    activeClassName="selected"
-                    className="nav-link"
-                  >
-                    Create Lead
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    to={"/leadList"}
-                    activeClassName="selected"
-                    className="nav-link"
-                  >
-                    Leads List
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </nav>{" "}
+          <NavBar />
           <br />
           <div class="container">
             <div class="row">
